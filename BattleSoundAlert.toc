@@ -1,7 +1,7 @@
 ## Interface: 100007
 ## Title: BattleSoundAlert
 ## Notes: Un addon qui joue des sons pour alerter des sorts offensifs et défensifs en arène.
-## Author: Brawler Haldrööd (EU - Ysondre)
+## Author: Brawler Halfdrööd (EU - Ysondre)
 ## Version: 1.0
 ## SavedVariables: SpellAlertAddonDB
 
