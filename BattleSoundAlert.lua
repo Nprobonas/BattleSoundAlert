@@ -1,7 +1,7 @@
 -- Initialisation
 
-local BurstHornSound = "Interface\\AddOns\\SpellAlertAddon\\Sounds\\burstHorn.mp3"
-local DefHornSound = "Interface\\AddOns\\SpellAlertAddon\\Sounds\\defHorn.mp3"
+local BurstHornSound = "Interface\\AddOns\\BattleSoundAlert\\Sounds\\audio.mp3"
+local DefHornSound = "Interface\\AddOns\\BattleSoundAlert\\Sounds\\audio.mp3"
 
 local BurstSpellTracked = {
       -- Chevalier de la mort (DK)
@@ -48,10 +48,11 @@ local BurstSpellTracked = {
       [231895] = BurstHornSound,  -- Croisade (Vindicte)
   
       -- Prêtre (Priest)
-      [10060] = BurstHornSound,   -- Infusion de puissance (Ombre)
-      [194249] = BurstHornSound,  -- Forme du Vide (Ombre)
+      -- [10060] = BurstHornSound,   -- Infusion de puissance (Ombre)
+      [263165] = BurstHornSound,  -- Torrent du Vide (Ombre)
       [391109] = BurstHornSound,  -- Ascension des ténèbres (Ombre)
-  
+      [120644] = BurstHornSound,  -- Halo (Ombre)
+
       -- Voleur (Rogue)
       [121471] = BurstHornSound,  -- Lames de l'ombre (Finesse)
       [79140] = BurstHornSound,   -- Vendetta (Assassinat)
@@ -131,6 +132,7 @@ frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 
 -- Fonction qui joue le son lorsque l'ID d'un sort de la table est détecté
 
+
 local function PlaySpellSound(spellID)
     local BurstSoundFile = BurstSpellTracked[spellID]
     local DefSoundFile = DefSpellTracked[spellID]
@@ -147,11 +149,12 @@ end
 
 -- Détection des sorts dans le journal de combat
 
-frame:SetScript("onEvent", function (self, event)
+frame:SetScript("OnEvent", function (self, event)
     local _, subEvent, _, _, _, _, _, _, destName, _, _, spellID = CombatLogGetCurrentEventInfo()
 
-    if subEvent == "SPELL_CAST_SUCCESS" and (destName == UnitName("target") or destName == UnitName("arena1") or destName == UnitName("arena2") or destName == UnitName("arena3")) then
+    if subEvent == "SPELL_CAST_SUCCESS" and  (destName == UnitName("target") or destName == UnitName("arena1") or destName == UnitName("arena2") or destName == UnitName("arena3")) then
         if BurstSpellTracked[spellID] or DefSpellTracked[spellID] then
+           -- print("Sort détecté : "..spellID)
             PlaySpellSound(spellID)
         end
     end
